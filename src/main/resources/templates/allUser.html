@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>员工展示</title>
+    <link href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <script>
+        function search() {
+            let id = document.getElementById('userId').value;
+            window.location.href = '/all/' + id;
+        }
+    </script>
+</head>
+
+<body>
+<div class="container">
+    <!--标题-->
+    <div class="row clearfix">
+        <div class="col-md-12 column">
+            <div class="page-header">
+                <h1>
+                    <small>用户列表</small>
+                </h1>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <!--添加用户-->
+        <div class="col-md-4 column">
+            <a class = "btn btn-primary" th:href="@{/add}">新增用户</a>
+            <a class = "btn btn-primary" th:href="@{/all}">查看所有用户</a>
+        </div>
+
+        <!--查询用户-->
+        <div class="col-md-8 column">
+            <span style="color:red;font-weight: bold"></span>
+            <input type="text" name="queryBookName" class="form-control" placeholder="请输入用户ID" id="userId"/>
+            <button class="btn btn-primary" id="search" onclick="search()">搜索</button>
+        </div>
+    </div>
+
+    <!--展示用户-->
+    <div class="row clearfix">
+        <div class="col-md-12 column">
+            <table class="table table-hover table-striped">
+                <thead>
+                <tr>
+                    <th>用户ID</th>
+                    <th>用户姓名</th>
+                    <th>用户年龄</th>
+                    <th>详细描述</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <div th:each="list:${list}">
+                    <tr>
+                        <td th:text="${list.id}"></td>
+                        <td th:text="${list.name}"></td>
+                        <td th:text="${list.age}"></td>
+                        <td th:text="${list.description}"></td>
+                        <td>
+                            <a th:href="@{/toUpdate/}+${list.id}">修改</a>
+                            &nbsp; | &nbsp;
+                            <a th:href="@{/delete/}+${list.id}">删除</a>
+                        </td>
+                    </tr>
+                </div>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>

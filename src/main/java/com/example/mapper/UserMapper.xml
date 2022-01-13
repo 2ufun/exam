@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.mapper.UserMapper">
+    <select id="getAllUser" resultType="com.example.pojo.User">
+        select * from user;
+    </select>
+
+    <select id="getUserById" resultType="com.example.pojo.User">
+        select * from user where id = #{id};
+    </select>
+
+    <insert id="addUser" parameterType="com.example.pojo.User">
+        insert into exam.user(id, name, age, description)
+        values (#{id}, #{name}, #{age}, #{description});
+    </insert>
+
+    <update id="updateUser" parameterType="com.example.pojo.User">
+        update exam.user
+        set name=#{name}, age=#{age}, description=#{description}
+        where id=#{id};
+    </update>
+
+    <delete id="deleteUser">
+        delete from exam.user
+        where id=#{id};
+    </delete>
+</mapper>

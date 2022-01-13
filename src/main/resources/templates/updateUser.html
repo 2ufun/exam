@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>用户信息修改</title>
+    <link href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <script>
+        function update() {
+            let id = document.getElementById("userId").value;
+            let name = document.getElementById("userName").value;
+            let age = document.getElementById("userAge").value;
+            let detail = document.getElementById("detail").value;
+            window.location.href='/update/' + id + '/' + name + '/' + age + '/' + detail;
+        }
+    </script>
+</head>
+
+<body>
+
+<div class="container">
+    <!--标题-->
+    <div class="row clearfix">
+        <div class="col-md-12 column">
+            <div class="page-header">
+                <h1>
+                    <small>信息修改</small>
+                </h1>
+            </div>
+        </div>
+    </div>
+
+    <input type="hidden" id="userId" th:value="${user.id}"/>
+
+    <div class="form-group">
+        <label for="userName">用户姓名：</label>
+        <input type="text" class="form-control" id="userName" th:value="${user.name}" required>
+    </div>
+
+    <div class="form-group">
+        <label for="userAge">用户年龄：</label>
+        <input type="text" class="form-control" id="userAge" th:value="${user.age}" required>
+    </div>
+
+    <div class="form-group">
+        <label for="detail">详细描述：</label>
+        <input type="text" class="form-control" id="detail" th:value="${user.description}" required>
+    </div>
+
+    <button class="btn btn-default" onclick="update()">修改</button>
+</div>
+
+</body>
+</html>
+

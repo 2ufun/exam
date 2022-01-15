@@ -25,9 +25,15 @@ public class UserController {
 
     @RequestMapping("/all/{id}")
     public String queryUser(Model model, @PathVariable String id) {
-        List<User> list = new ArrayList<>();
-        list.add(userMapper.getUserById(id));
-        model.addAttribute("list", list);
+
+        User user = userMapper.getUserById(id);
+        if(user == null) {
+            model.addAttribute("err", "error! no such user");
+        } else {
+            List<User> list = new ArrayList<>();
+            list.add(user);
+            model.addAttribute("list", list);
+        }
         return "allUser";
     }
 

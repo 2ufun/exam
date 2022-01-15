@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>员工展示</title>
+    <title>用户列表</title>
     <link href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <script>
         function search() {
@@ -34,9 +34,11 @@
 
         <!--查询用户-->
         <div class="col-md-8 column">
-            <span style="color:red;font-weight: bold"></span>
-            <input type="text" name="queryBookName" class="form-control" placeholder="请输入用户ID" id="userId"/>
-            <button class="btn btn-primary" id="search" onclick="search()">搜索</button>
+            <span style="color:red;font-weight: bold" th:text="${err}"></span>
+            <div class="form-inline" style="float: right">
+                <input type="text" class="form-control" placeholder="请输入用户ID" id="userId"/>
+                <button class="btn btn-primary" id="search" onclick="search()">搜索</button>
+            </div>
         </div>
     </div>
 

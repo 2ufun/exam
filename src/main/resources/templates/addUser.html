@@ -4,20 +4,12 @@
 <head>
     <title>添加用户</title>
     <link href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-    <script>
-        function add() {
-            let id = document.getElementById("id").value;
-            let name = document.getElementById("name").value;
-            let age = document.getElementById("age").value;
-            let detail = document.getElementById("description").value;
-            window.location.href='/add/' + id + '/' + name + '/' + age + '/' + detail;
-        }
-    </script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.21/dist/vue.js"></script>
 </head>
 
 <body>
-<div class="container">
 
+<div class="container" id="add">
     <!--标题-->
     <div class="row clearfix">
         <div class="col-md-12 column">
@@ -31,25 +23,47 @@
 
     <div class="form-group">
         <label for="id">用户ID</label>
-        <input type="text" class="form-control" id="id" required>
+        <input type="text" class="form-control" id="id" v-model="id" required>
     </div>
 
     <div class="form-group">
         <label for="name">用户名称</label>
-        <input type="text" class="form-control" id="name" required>
+        <input type="text" class="form-control" id="name" v-model="name" required>
     </div>
 
     <div class="form-group">
         <label for="age">用户年龄：</label>
-        <input type="text" class="form-control" id="age" required>
+        <input type="text" class="form-control" id="age" v-model="age" required>
     </div>
 
     <div class="form-group">
         <label for="description">详细描述：</label>
-        <input type="text" class="form-control" id="description" required>
+        <input type="text" class="form-control" id="description" v-model="description" required>
     </div>
 
-    <button class="btn btn-default" onclick="add()">添加</button>
+    <button class="btn btn-default" v-on:click="add">添加</button>
 </div>
+
+<script>
+    let vm = new Vue({
+        el: '#add',
+        data: {
+            id: '',
+            name: '',
+            age: '',
+            description: ''
+        },
+        methods: {
+            add: function() {
+                window.location.href = '/add/' +
+                    this.id + '/' +
+                    this.name + '/' +
+                    this.age + '/' +
+                    this.description
+            }
+        }
+    })
+</script>
+
 </body>
 </html>

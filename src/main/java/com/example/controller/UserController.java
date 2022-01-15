@@ -67,4 +67,9 @@ public class UserController {
         userMapper.deleteUser(id);
         return "redirect:/all";
     }
+
+    @RequestMapping("/demo")
+    public String demo(){
+        return "demo";
+    }
 }

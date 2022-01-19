@@ -28,20 +28,19 @@
     </div>
 
     <div class="form-group">
-        <label>用户姓名：</label>
+        <label><span style="color:red">*</span>用户姓名：</label>
         <input type="text" class="form-control"
                maxlength="10"
-               oninput="value=value.replace(/[^\w\u4E00-\u9FA5]/g, '')"
+               oninput="value=value.replace(/[^\a-\z\A-\Z0-9\u4E00-\u9FA5\ ]/g,'')"
                placeholder="用户名称由1-10个字符组成，只能包括中文、英文和数字"
                th:value="${user.name}" ref="name" required>
     </div>
 
     <div class="form-group">
-        <label>用户年龄：</label>
+        <label><span style="color:red">*</span>用户年龄：</label>
         <input type="text" class="form-control"
-               maxlength="3"
-               oninput = "value=value.replace(/[^\d]/g,'')"
-               placeholder="年龄栏只能输入纯数字，且至多为3位"
+               oninput = "value=value.replace(/[^\d]/g,'');if(value>150)value=150"
+               placeholder="年龄栏只能输入纯数字，且范围为0-150"
                th:value="${user.age}" ref="age" required>
     </div>
 
@@ -49,8 +48,8 @@
         <label>详细描述：</label>
         <input type="text" class="form-control"
                maxlength="100"
-               oninput="value=value.replace(/[^\w\u4E00-\u9FA5]/g, '')"
-               placeholder="100字以内，只能包含中文、英文和数字"
+               oninput="value=value.replace(/[^\a-\z\A-\Z0-9\u4E00-\u9FA5\ ]/g,'')"
+               placeholder="100字以内，只能包含中文、英文和数字，可不填写"
                th:value="${user.detail}" ref="detail" required>
     </div>
 
@@ -60,27 +59,35 @@
     </div>
 
     <button class="btn btn-default" v-on:click="update">修改</button>
+
+    <span style="color:red">{{err}}</span>
 </div>
 
 <script>
     let vm = new Vue({
         el: '#update',
+        data: {
+          err: ''
+        },
         methods: {
             update: function () {
-                $.ajax({
-                    url: '/update',
-                    type: 'post',
-                    headers:{'Content-Type': 'application/json'},
-                    dataType:'json',
-                    data: JSON.stringify({
-                        id: this.$refs.id.value,
-                        name: this.$refs.name.value,
-                        age: this.$refs.age.value,
-                        detail: this.$refs.detail.value
-                    })
-                });
-
-                window.location.href="/all";
+                if(this.$refs.name.value === '' || this.$refs.age.value === '') {
+                    this.err = "请完善您的信息"
+                } else {
+                    $.ajax({
+                        url: '/update',
+                        type: 'post',
+                        headers: {'Content-Type': 'application/json'},
+                        dataType: 'json',
+                        data: JSON.stringify({
+                            id: this.$refs.id.value,
+                            name: this.$refs.name.value,
+                            age: this.$refs.age.value,
+                            detail: this.$refs.detail.value
+                        })
+                    });
+                    window.location.href="/all";
+                }
             }
         }
     })

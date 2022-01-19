@@ -2,8 +2,10 @@
 <html>
 <head>
     <title>用户信息修改</title>
+    <meta charset="UTF-8">
     <link href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/vue@2.5.21/dist/vue.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
 <body>
@@ -22,37 +24,63 @@
 
     <div class="form-group">
         <label>用户ID：</label>
-        <input type="text" class="form-control" th:value="${user.id}" ref="id" required>
+        <input type="text" class="form-control" th:value="${user.id}" ref="id" required disabled>
     </div>
 
     <div class="form-group">
         <label>用户姓名：</label>
-        <input type="text" class="form-control" th:value="${user.name}" ref="name" required>
+        <input type="text" class="form-control"
+               maxlength="10"
+               oninput="value=value.replace(/[^\w\u4E00-\u9FA5]/g, '')"
+               placeholder="用户名称由1-10个字符组成，只能包括中文、英文和数字"
+               th:value="${user.name}" ref="name" required>
     </div>
 
     <div class="form-group">
         <label>用户年龄：</label>
-        <input type="text" class="form-control" th:value="${user.age}" ref="age" required>
+        <input type="text" class="form-control"
+               maxlength="3"
+               oninput = "value=value.replace(/[^\d]/g,'')"
+               placeholder="年龄栏只能输入纯数字，且至多为3位"
+               th:value="${user.age}" ref="age" required>
     </div>
 
     <div class="form-group">
         <label>详细描述：</label>
-        <input type="text" class="form-control" th:value="${user.description}" ref="description" required>
+        <input type="text" class="form-control"
+               maxlength="100"
+               oninput="value=value.replace(/[^\w\u4E00-\u9FA5]/g, '')"
+               placeholder="100字以内，只能包含中文、英文和数字"
+               th:value="${user.detail}" ref="detail" required>
     </div>
 
-    <button class="btn btn-default" v-on:click="subbmitButton">修改</button>
+    <div class="form-group">
+        <label>创建日期：</label>
+        <input type="text" class="form-control" th:value="${user.createdDate}" required disabled>
+    </div>
+
+    <button class="btn btn-default" v-on:click="update">修改</button>
 </div>
 
 <script>
     let vm = new Vue({
         el: '#update',
         methods: {
-            subbmitButton: function () {
-                window.location.href = '/update/' +
-                    this.$refs.id.value + '/' +
-                    this.$refs.name.value + '/' +
-                    this.$refs.age.value + '/' +
-                    this.$refs.description.value
+            update: function () {
+                $.ajax({
+                    url: '/update',
+                    type: 'post',
+                    headers:{'Content-Type': 'application/json'},
+                    dataType:'json',
+                    data: JSON.stringify({
+                        id: this.$refs.id.value,
+                        name: this.$refs.name.value,
+                        age: this.$refs.age.value,
+                        detail: this.$refs.detail.value
+                    })
+                });
+
+                window.location.href="/all";
             }
         }
     })

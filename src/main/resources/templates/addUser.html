@@ -3,8 +3,10 @@
 
 <head>
     <title>添加用户</title>
+    <meta charset="UTF-8">
     <link href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/vue@2.5.21/dist/vue.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
 <body>
@@ -22,23 +24,30 @@
     </div>
 
     <div class="form-group">
-        <label for="id">用户ID</label>
-        <input type="text" class="form-control" id="id" v-model="id" required>
-    </div>
-
-    <div class="form-group">
         <label for="name">用户名称</label>
-        <input type="text" class="form-control" id="name" v-model="name" required>
+        <input type="text" class="form-control" id="name"
+               maxlength="10"
+               oninput="value=value.replace(/[^\w\u4E00-\u9FA5]/g, '')"
+               placeholder="用户名称由1-10个字符组成，只能包括中文、英文和数字"
+               v-model="name" required>
     </div>
 
     <div class="form-group">
         <label for="age">用户年龄：</label>
-        <input type="text" class="form-control" id="age" v-model="age" required>
+        <input type="text" class="form-control" id="age"
+               maxlength="3"
+               oninput = "value=value.replace(/[^\d]/g,'')"
+               placeholder="年龄栏只能输入纯数字，且至多为3位"
+               v-model="age" required>
     </div>
 
     <div class="form-group">
         <label for="description">详细描述：</label>
-        <input type="text" class="form-control" id="description" v-model="description" required>
+        <input type="text" class="form-control" id="description"
+               maxlength="100"
+               oninput="value=value.replace(/[^\w\u4E00-\u9FA5]/g, '')"
+               placeholder="100字以内，只能包含中文、英文和数字"
+               v-model="detail" required>
     </div>
 
     <button class="btn btn-default" v-on:click="add">添加</button>
@@ -48,18 +57,25 @@
     let vm = new Vue({
         el: '#add',
         data: {
-            id: '',
             name: '',
             age: '',
-            description: ''
+            detail: ''
         },
         methods: {
             add: function() {
-                window.location.href = '/add/' +
-                    this.id + '/' +
-                    this.name + '/' +
-                    this.age + '/' +
-                    this.description
+                $.ajax({
+                    url: '/add',
+                    type: 'post',
+                    headers:{'Content-Type': 'application/json'},
+                    dataType:'json',
+                    data: JSON.stringify({
+                        name: this.name,
+                        age: this.age,
+                        detail: this.detail
+                    })
+                });
+
+                window.location.href="/all";
             }
         }
     })

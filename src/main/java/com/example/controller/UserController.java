@@ -1,12 +1,15 @@
 package com.example.controller;
 
-import com.example.mapper.UserMapper;
+import com.alibaba.fastjson.JSONObject;
 import com.example.pojo.User;
+import com.example.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,18 +18,19 @@ import java.util.List;
 public class UserController {
 
     @Autowired
-    private UserMapper userMapper;
+    private UserService userService;
 
     @RequestMapping("/all")
     public String allUser(Model model) {
-        model.addAttribute("list", userMapper.getAllUser());
+        model.addAttribute("list", userService.getAllUser());
         return "allUser";
     }
 
     @RequestMapping("/all/{id}")
     public String queryUser(Model model, @PathVariable String id) {
 
-        User user = userMapper.getUserById(id);
+        User user = userService.getUserById(id);
+
         if(user == null) {
             model.addAttribute("err", "error! no such user");
         } else {
@@ -37,34 +41,35 @@ public class UserController {
         return "allUser";
     }
 
-    @RequestMapping("/add")
+    @RequestMapping("/toAdd")
     public String toAddUser(){
         return "addUser";
     }
 
-    @RequestMapping("/add/{id}/{name}/{age}/{detail}")
-    public String addUser(@PathVariable String id, @PathVariable String name,
-                          @PathVariable Integer age, @PathVariable String detail) {
-        userMapper.addUser(new User(id, name, age, detail));
-        return "redirect:/all";
+    @RequestMapping("/add")
+    @ResponseBody
+    public void addUser(@RequestBody String json) {
+        JSONObject obj = JSONObject.parseObject(json);
+        userService.addUser(obj.getString("name"), obj.getInteger("age"), obj.getString("detail"));
     }
 
     @RequestMapping("/toUpdate/{id}")
     public String toUpdateUser(@PathVariable String id, Model model) {
-        model.addAttribute("user", userMapper.getUserById(id));
+        model.addAttribute("user", userService.getUserById(id));
         return "updateUser";
     }
 
-    @RequestMapping("/update/{id}/{name}/{age}/{detail}")
-    public String updateUser(@PathVariable String id, @PathVariable String name,
-                             @PathVariable Integer age, @PathVariable String detail) {
-        userMapper.updateUser(new User(id,name,age,detail));
-        return "redirect:/all";
+    @RequestMapping("/update")
+    @ResponseBody
+    public void updateUser(@RequestBody String json) {
+        JSONObject obj = JSONObject.parseObject(json);
+        userService.updateUser(obj.getInteger("id"), obj.getString("name"),
+                               obj.getInteger("age"), obj.getString("detail"));
     }
 
     @RequestMapping("/delete/{id}")
     public String deleteUser(@PathVariable String id){
-        userMapper.deleteUser(id);
+        userService.deleteUser(id);
         return "redirect:/all";
     }
 

@@ -6,6 +6,6 @@
 <mapper namespace="com.example.mapper.AdminMapper">
     <select id="getAdmin" resultType="com.example.pojo.Admin">
         select * from exam_admin
-        where id = #{id};
+        where id = #{id} and password = #{password};
     </select>
 </mapper>

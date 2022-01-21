@@ -19,6 +19,6 @@ class ExamApplicationTests {
 
 	@Test
 	public void contextLoads() throws SQLException {
-		System.out.println(adminMapper.getAdmin("root"));
+		System.out.println(adminMapper.getAdmin("root", "123456"));
 	}
 }

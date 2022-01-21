@@ -12,7 +12,7 @@ public class AdminServiceImpl implements AdminService{
     private AdminMapper adminMapper;
 
     @Override
-    public Admin getAdmin(String id) {
-        return adminMapper.getAdmin(id);
+    public Admin getAdmin(String id, String password) {
+        return adminMapper.getAdmin(id, password);
     }
 }

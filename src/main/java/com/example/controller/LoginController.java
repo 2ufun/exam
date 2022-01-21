@@ -24,9 +24,9 @@ public class LoginController {
     @RequestMapping("/login")
     public String login(@RequestParam String id, @RequestParam String password, Model model, HttpSession session) {
 
-        Admin target = adminService.getAdmin(id);
+        Admin target = adminService.getAdmin(id, password);
 
-        if (target == null || !password.equals(target.getPassword())) {
+        if (target == null) {
             model.addAttribute("error", "用户或密码错误！");
             return "index";
         } else {

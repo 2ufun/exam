@@ -68,23 +68,18 @@
                 if(this.name === '' || this.age === '') {
                     this.err = "请完善您的信息"
                 } else {
-                    $.ajax({
-                        url: '/add',
-                        type: 'post',
-                        headers:{'Content-Type': 'application/json'},
-                        dataType:'json',
-                        data: JSON.stringify({
+                    $.post("/add",
+                        {
                             name: this.name,
                             age: this.age,
-                            detail: this.detail
-                        })
-                    });
-
+                            detail: this.detail,
+                        }
+                    );
                     window.location.href="/all";
                 }
             }
         }
-    })
+    });
 </script>
 
 </body>

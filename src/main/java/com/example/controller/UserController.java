@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,9 +49,10 @@ public class UserController {
 
     @RequestMapping("/add")
     @ResponseBody
-    public void addUser(@RequestBody String json) {
-        JSONObject obj = JSONObject.parseObject(json);
-        userService.addUser(obj.getString("name"), obj.getInteger("age"), obj.getString("detail"));
+    public void addUser(HttpServletRequest request) {
+        userService.addUser(request.getParameter("name"),
+                            Integer.parseInt(request.getParameter("age")),
+                            request.getParameter("detail"));
     }
 
     @RequestMapping("/toUpdate/{id}")
@@ -61,10 +63,11 @@ public class UserController {
 
     @RequestMapping("/update")
     @ResponseBody
-    public void updateUser(@RequestBody String json) {
-        JSONObject obj = JSONObject.parseObject(json);
-        userService.updateUser(obj.getInteger("id"), obj.getString("name"),
-                               obj.getInteger("age"), obj.getString("detail"));
+    public void updateUser(HttpServletRequest request) {
+        userService.updateUser(Integer.parseInt(request.getParameter("id")),
+                request.getParameter("name"),
+                Integer.parseInt(request.getParameter("age")),
+                request.getParameter("detail"));
     }
 
     @RequestMapping("/delete/{id}")

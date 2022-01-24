@@ -74,18 +74,14 @@
                 if(this.$refs.name.value === '' || this.$refs.age.value === '') {
                     this.error= "请完善您的信息"
                 } else {
-                    $.ajax({
-                        url: '/update',
-                        type: 'post',
-                        headers: {'Content-Type': 'application/json'},
-                        dataType: 'json',
-                        data: JSON.stringify({
+                    $.post("/update",
+                        {
                             id: this.$refs.id.value,
                             name: this.$refs.name.value,
                             age: this.$refs.age.value,
                             detail: this.$refs.detail.value
-                        })
-                    });
+                        }
+                    );
                     window.location.href="/all";
                 }
             }

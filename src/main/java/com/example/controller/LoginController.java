@@ -18,9 +18,7 @@ public class LoginController {
 
     @RequestMapping("/login")
     public String login(@RequestParam String id, @RequestParam String password, Model model, HttpSession session) {
-
         Admin target = adminService.getAdmin(id, password);
-
         if (target == null) {
             model.addAttribute("error", "用户或密码错误！");
             return "index";
@@ -28,6 +26,12 @@ public class LoginController {
             session.setAttribute("loginUser", target.getId());
             return "redirect:/all";
         }
+    }
 
+    @RequestMapping("/admin")
+    public String admin(Model model, HttpSession session) {
+        String id = (String) session.getAttribute("loginUser");
+        model.addAttribute("id", id);
+        return "admin";
     }
 }

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <title>管理员界面</title>
+    <meta charset="UTF-8">
+    <script th:src="@{/script/jquery-3.6.0.min.js}"></script>
+    <link crossorigin="anonymous" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.21/dist/vue.js"></script>
+    <link rel="stylesheet" th:href="@{/css/dashboard.css}">
+</head>
+
+<body>
+
+<nav th:insert="~{commons/common::topbar}"></nav>
+
+<div class="container-fluid">
+    <div class="row">
+
+        <nav th:insert="~{commons/common::sidebar(active='admin')}"></nav>
+
+        <div class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+            <div class="row clearfix">
+                <div class="col-md-12 column">
+                    <div class="alert alert-danger">
+                        <strong>您当前正在使用管理员账号！</strong><br/>
+                        请谨慎使用权限，避免造成不必要的损失！
+                    </div>
+
+                    <div class="page-header">
+                        <h1>
+                            <small>
+                                您当前登陆的用户为：
+                                <span style="color: red; font-weight: bolder" th:text="${id}"></span>
+                            </small>
+                        </h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

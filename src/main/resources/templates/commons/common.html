@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<!--顶栏-->
+<nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0" th:fragment="topbar">
+    <a class="navbar-brand col-sm-3 col-md-2 mr-0" th:href="@{/all}">用户管理系统</a>
+    <ul class="navbar-nav px-3">
+        <li class="nav-item text-nowrap">
+            <a class="nav-link" th:href="@{/}">Sign out</a>
+        </li>
+    </ul>
+</nav>
+
+<!--侧边栏-->
+<nav class="col-md-2 d-none d-md-block bg-light sidebar" th:fragment="sidebar">
+    <div class="sidebar-sticky">
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a th:class="${active == 'all' ? 'nav-link active' : 'nav-link'}" th:href="@{/all}">
+                    所有员工
+                </a>
+            </li>
+            <li class="nav-item">
+                <a th:class="${active == 'add' ? 'nav-link active' : 'nav-link'}" th:href="@{/add}">
+                    添加员工
+                </a>
+            </li>
+            <li class="nav-item">
+                <a th:class="${active == 'admin' ? 'nav-link active' : 'nav-link'}" th:href="@{/admin}">
+                    管理员账号
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+</html>

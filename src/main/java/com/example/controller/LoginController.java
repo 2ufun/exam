@@ -34,4 +34,10 @@ public class LoginController {
         model.addAttribute("id", id);
         return "admin";
     }
+
+    @RequestMapping("/logout")
+    public String logout(HttpSession session) {
+        session.invalidate();
+        return "redirect:/";
+    }
 }

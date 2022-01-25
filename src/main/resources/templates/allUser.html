@@ -54,12 +54,12 @@
                 <tbody>
                 <div th:each="user:${list}">
                     <tr>
-                        <td th:text="${user.id}"></td>
-                        <td th:text="${user.name}"></td>
-                        <td th:text="${user.age}"></td>
-                        <td th:text="${user.detail}"></td>
-                        <td th:text="${#dates.format(user.createdDate, 'yyyy-MM-dd')}"></td>
-                        <td>
+                        <td style="width:10%" th:text="${user.id}"></td>
+                        <td style="width:15%" th:text="${user.name}"></td>
+                        <td style="width:10%" th:text="${user.age}"></td>
+                        <td style="width:40%; word-wrap: break-word" th:text="${user.detail}"></td>
+                        <td style="width:10%" th:text="${#dates.format(user.createdDate, 'yyyy-MM-dd')}"></td>
+                        <td style="width:15%">
                             <a th:href="@{/update/}+${user.id}">修改</a>
                             &nbsp; | &nbsp;
                             <a th:href="@{/delete/}+${user.id}">删除</a>

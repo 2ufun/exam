@@ -20,36 +20,40 @@
         <nav th:insert="~{commons/common::sidebar(active='add')}"></nav>
 
         <div class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4" id="add">
-            <div class="form-group">
-                <label for="name"><span style="color:red">*</span>用户名称</label>
-                <input class="form-control" id="name" maxlength="10"
-                       oninput="value=value.replace(/[^\a-\z\A-\Z0-9\u4E00-\u9FA5\ ]/g,'')"
-                       placeholder="用户名称由1-10个字符组成，只能包括中文、英文和数字"
-                       type="text"
-                       v-model="name">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="name"><span style="color:red">*</span>用户名称</label>
+                        <input class="form-control" id="name" maxlength="10"
+                               oninput="value=value.replace(/[^\a-\z\A-\Z0-9\u4E00-\u9FA5\ ]/g,'')"
+                               placeholder="用户名称由1-10个字符组成，只能包括中文、英文和数字"
+                               type="text"
+                               v-model="name">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="age"><span style="color:red">*</span>用户年龄：</label>
+                        <input class="form-control" id="age"
+                               oninput="value=value.replace(/[^\d]/g,'');if(value>150)value=150"
+                               placeholder="年龄栏只能输入纯数字，范围为0-150"
+                               type="text"
+                               v-model="age">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description">详细描述：</label>
+                        <input class="form-control" id="description" maxlength="100"
+                               oninput="value=value.replace(/[^\a-\z\A-\Z0-9\u4E00-\u9FA5\ ]/g,'')"
+                               placeholder="100字以内，只能包含中文、英文和数字，可不填写"
+                               type="text"
+                               v-model="detail">
+                    </div>
+
+                    <button class="btn btn-default" v-on:click="add">添加</button>
+
+                    <span style="color:red">{{error}}</span>
+                </div>
             </div>
-
-            <div class="form-group">
-                <label for="age"><span style="color:red">*</span>用户年龄：</label>
-                <input class="form-control" id="age"
-                       oninput="value=value.replace(/[^\d]/g,'');if(value>150)value=150"
-                       placeholder="年龄栏只能输入纯数字，范围为0-150"
-                       type="text"
-                       v-model="age">
-            </div>
-
-            <div class="form-group">
-                <label for="description">详细描述：</label>
-                <input class="form-control" id="description" maxlength="100"
-                       oninput="value=value.replace(/[^\a-\z\A-\Z0-9\u4E00-\u9FA5\ ]/g,'')"
-                       placeholder="100字以内，只能包含中文、英文和数字，可不填写"
-                       type="text"
-                       v-model="detail">
-            </div>
-
-            <button class="btn btn-default" v-on:click="add">添加</button>
-
-            <span style="color:red">{{error}}</span>
         </div>
     </div>
 </div>

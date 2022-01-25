@@ -20,45 +20,49 @@
         <nav th:insert="~{commons/common::sidebar(active='all')}"></nav>
 
         <div class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4" id="update">
-            <div class="form-group">
-                <label>用户ID：</label>
-                <input class="form-control" disabled ref="id" required th:value="${user.id}" type="text">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>用户ID：</label>
+                        <input class="form-control" disabled ref="id" required th:value="${user.id}" type="text">
+                    </div>
+
+                    <div class="form-group">
+                        <label><span style="color:red">*</span>用户姓名：</label>
+                        <input class="form-control" maxlength="10"
+                               oninput="value=value.replace(/[^\a-\z\A-\Z0-9\u4E00-\u9FA5\ ]/g,'')"
+                               placeholder="用户名称由1-10个字符组成，只能包括中文、英文和数字"
+                               ref="name"
+                               required th:value="${user.name}" type="text">
+                    </div>
+
+                    <div class="form-group">
+                        <label><span style="color:red">*</span>用户年龄：</label>
+                        <input class="form-control" oninput="value=value.replace(/[^\d]/g,'');if(value>150)value=150"
+                               placeholder="年龄栏只能输入纯数字，且范围为0-150"
+                               ref="age"
+                               required th:value="${user.age}" type="text">
+                    </div>
+
+                    <div class="form-group">
+                        <label>详细描述：</label>
+                        <input class="form-control" maxlength="100"
+                               oninput="value=value.replace(/[^\a-\z\A-\Z0-9\u4E00-\u9FA5\ ]/g,'')"
+                               placeholder="100字以内，只能包含中文、英文和数字，可不填写"
+                               ref="detail"
+                               required th:value="${user.detail}" type="text">
+                    </div>
+
+                    <div class="form-group">
+                        <label>创建日期：</label>
+                        <input class="form-control" disabled required th:value="${user.createdDate}" type="text">
+                    </div>
+
+                    <button class="btn btn-default" v-on:click="update">修改</button>
+
+                    <span style="color:red">{{error}}</span>
+                </div>
             </div>
-
-            <div class="form-group">
-                <label><span style="color:red">*</span>用户姓名：</label>
-                <input class="form-control" maxlength="10"
-                       oninput="value=value.replace(/[^\a-\z\A-\Z0-9\u4E00-\u9FA5\ ]/g,'')"
-                       placeholder="用户名称由1-10个字符组成，只能包括中文、英文和数字"
-                       ref="name"
-                       required th:value="${user.name}" type="text">
-            </div>
-
-            <div class="form-group">
-                <label><span style="color:red">*</span>用户年龄：</label>
-                <input class="form-control" oninput="value=value.replace(/[^\d]/g,'');if(value>150)value=150"
-                       placeholder="年龄栏只能输入纯数字，且范围为0-150"
-                       ref="age"
-                       required th:value="${user.age}" type="text">
-            </div>
-
-            <div class="form-group">
-                <label>详细描述：</label>
-                <input class="form-control" maxlength="100"
-                       oninput="value=value.replace(/[^\a-\z\A-\Z0-9\u4E00-\u9FA5\ ]/g,'')"
-                       placeholder="100字以内，只能包含中文、英文和数字，可不填写"
-                       ref="detail"
-                       required th:value="${user.detail}" type="text">
-            </div>
-
-            <div class="form-group">
-                <label>创建日期：</label>
-                <input class="form-control" disabled required th:value="${user.createdDate}" type="text">
-            </div>
-
-            <button class="btn btn-default" v-on:click="update">修改</button>
-
-            <span style="color:red">{{error}}</span>
         </div>
     </div>
 </div>
